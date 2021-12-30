@@ -7,14 +7,16 @@ const cors = require("cors");
 const app = express().use("*", cors());
 app.use(express.json());
 const SocketServer = require("ws").Server;
-
-const PORT = 3400;
+const INDEX = '/index.html';
+const PORT = 5400;
 // const PORT = process.env.PORT || 3400;
-const server = express().listen(PORT, () =>
-  console.log(`Listening on ${PORT}`)
-);
+// const server = express().listen(PORT, () =>
+//   console.log(`Listening on ${PORT}`)
+// );
 
-
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const wss = new SocketServer({ server });
 
