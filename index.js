@@ -14,21 +14,7 @@ const server = express().listen(PORT, () =>
   console.log(`Listening on ${PORT}`)
 );
 
-// const server = http.createServer((req, res) => {
-//   if (req.url == '/') {
-//       res.writeHead(200, {
-//           'Context-Type': 'text/html'
-//       });
-//       res.write('<h1>WebSocket test!!</h1>');
-//       res.end();
-//   } else {
-//       res.writeHead(200, {
-//           'Context-Type': 'text/html'
-//       });
-//       res.write('<h1>404</h1>');
-//       res.end();
-//   }
-// }).listen(PORT, () => console.log(`Listening on ${PORT}`))
+
 
 const wss = new SocketServer({ server });
 
@@ -58,6 +44,22 @@ wss.on("connection", (ws) => {
     // clearInterval(sendNowTime);
     console.log("Close connected");
   });
+});
+
+app.get("/fetch_preview", async (req, res) => {
+  let url = req.headers.url;
+  console.log("url", url);
+
+  let result;
+  urlMetadata(url, {})
+    .then(async (metadata) => {
+      // console.log("urlMetadata_metadata", metadata);
+      res.send(metadata);
+    })
+    .catch((error) => {
+      console.log("urlMetadata_error", error);
+      res.status(503).end();
+    });
 });
 
 // const nodeServer = http.createServer(app);
