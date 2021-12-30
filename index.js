@@ -8,8 +8,8 @@ const app = express().use("*", cors());
 app.use(express.json());
 const SocketServer = require("ws").Server;
 
-// const PORT = 3400;
-const PORT = process.env.PORT || 3400;
+const PORT = 3400;
+// const PORT = process.env.PORT || 3400;
 const server = express().listen(PORT, () =>
   console.log(`Listening on ${PORT}`)
 );
@@ -22,7 +22,7 @@ wss.on("connection", (ws) => {
   console.log("Client connected");
 
   // const sendNowTime = setInterval(() => {
-    // ws.send(String(new Date()));
+    ws.send(String(new Date()));
   // }, 1000);
 
   ws.on("message", (data) => {
@@ -46,22 +46,28 @@ wss.on("connection", (ws) => {
   });
 });
 
-app.get("/fetch_preview", async (req, res) => {
-  let url = req.headers.url;
-  console.log("url", url);
+// app.get("/fetch_preview", async (req, res) => {
+//   let url = req.headers.url;
+//   console.log("url", url);
 
-  let result;
-  urlMetadata(url, {})
-    .then(async (metadata) => {
-      // console.log("urlMetadata_metadata", metadata);
-      res.send(metadata);
-    })
-    .catch((error) => {
-      console.log("urlMetadata_error", error);
-      res.status(503).end();
-    });
+//   let result;
+//   urlMetadata(url, {})
+//     .then(async (metadata) => {
+//       // console.log("urlMetadata_metadata", metadata);
+//       res.send(metadata);
+//     })
+//     .catch((error) => {
+//       console.log("urlMetadata_error", error);
+//       res.status(503).end();
+//     });
+// });
+
+app.get("/", async (req, res) => {
+  console.log('res', res)
+  console.log('req', req)
+  res.send("connecting")
+
 });
-
 // const nodeServer = http.createServer(app);
 
 // nodeServer.listen(3400, () => {
