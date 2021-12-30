@@ -8,8 +8,8 @@ const app = express().use("*", cors());
 app.use(express.json());
 const SocketServer = require("ws").Server;
 
-const PORT = 3400;
-// const PORT = process.env.PORT || 3400;
+// const PORT = 3400;
+const PORT = process.env.PORT || 3400;
 const server = express().listen(PORT, () =>
   console.log(`Listening on ${PORT}`)
 );
