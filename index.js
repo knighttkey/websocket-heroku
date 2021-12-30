@@ -10,9 +10,25 @@ const SocketServer = require("ws").Server;
 
 const PORT = 3400;
 // const PORT = process.env.PORT || 3400;
-const server = express().listen(PORT, () =>
-  console.log(`Listening on ${PORT}`)
-);
+// const server = express().listen(PORT, () =>
+//   console.log(`Listening on ${PORT}`)
+// );
+
+const server = http.createServer((req, res) => {
+  if (req.url == '/') {
+      res.writeHead(200, {
+          'Context-Type': 'text/html'
+      });
+      res.write('<h1>WebSocket test!!</h1>');
+      res.end();
+  } else {
+      res.writeHead(200, {
+          'Context-Type': 'text/html'
+      });
+      res.write('<h1>404</h1>');
+      res.end();
+  }
+}).listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 const wss = new SocketServer({ server });
 
