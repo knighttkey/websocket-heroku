@@ -33,7 +33,7 @@ app.ws("/", (ws) => {
   console.log("Client connected");
 
   // const sendNowTime = setInterval(() => {
-    // ws.send(String(new Date()));
+    ws.send(JSON.stringify(new Date()));
   // }, 1000);
 
   ws.on("message", (data) => {
