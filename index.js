@@ -60,22 +60,6 @@ wss.on("connection", (ws) => {
   });
 });
 
-app.get("/fetch_preview", async (req, res) => {
-  let url = req.headers.url;
-  console.log("url", url);
-
-  let result;
-  urlMetadata(url, {})
-    .then(async (metadata) => {
-      // console.log("urlMetadata_metadata", metadata);
-      res.send(metadata);
-    })
-    .catch((error) => {
-      console.log("urlMetadata_error", error);
-      res.status(503).end();
-    });
-});
-
 // const nodeServer = http.createServer(app);
 
 // nodeServer.listen(3400, () => {
