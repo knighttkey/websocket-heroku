@@ -7,33 +7,33 @@ const cors = require("cors");
 // const app = express().use("*", cors());
 // app.use(express.json());
 const app = express()
-// const SocketServer = require("ws").Server;
+const SocketServer = require("ws").Server;
 const expressWs = require('express-ws')(app);
-
-const PORT = 5400;
-// const PORT = process.env.PORT || 3400;
+const INDEX = '/index.html';
+// const PORT = 5400;
+const PORT = process.env.PORT || 5400;
 // const server = express().listen(PORT, () =>
 //   console.log(`Listening on ${PORT}`)
 // );
 
-// const server = express()
-//   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-//   .listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-app.use(express.json()).listen(PORT, () => console.log(`Listening on ${PORT}`));
-app.use(cors())
+// app.use(express.json()).listen(PORT, () => console.log(`Listening on ${PORT}`));
+// app.use(cors())
 // app.get('/', (req, res) => { res.send('Hello World') })
 //   expressWs.getWss().clients.forEach(function each(client) {
 //     console.log("123")
 //     })
-// const wss = new SocketServer({ server });
+const wss = new SocketServer({ server });
 
-app.ws("/", (ws) => {
+wss.on("connection", (ws) => {
   console.log('ws', ws)
   console.log("Client connected");
 
   // const sendNowTime = setInterval(() => {
-    ws.send(JSON.stringify(new Date()));
+    // ws.send(JSON.stringify(new Date()));
   // }, 1000);
 
   ws.on("message", (data) => {
@@ -43,9 +43,9 @@ app.ws("/", (ws) => {
 
     console.log('bufferToString', bufferToString)
     // ws.send(data);
-    let clients = expressWs.getWss().clients
-    console.log('clients', clients)
-            // let clients = clients;
+    // let clients = expressWs.getWss().clients
+    // console.log('clients', clients)
+            let clients = wss.clients;
 
             clients.forEach(client => {
                 // client.send(String(data));
