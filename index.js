@@ -12,20 +12,11 @@ const expressWs = require('express-ws')(app);
 const INDEX = '/index.html';
 // const PORT = 5400;
 const PORT = process.env.PORT || 5400;
-// const server = express().listen(PORT, () =>
-//   console.log(`Listening on ${PORT}`)
-// );
 
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-// app.use(express.json()).listen(PORT, () => console.log(`Listening on ${PORT}`));
-// app.use(cors())
-// app.get('/', (req, res) => { res.send('Hello World') })
-//   expressWs.getWss().clients.forEach(function each(client) {
-//     console.log("123")
-//     })
 const wss = new SocketServer({ server });
 
 wss.on("connection", (ws) => {
@@ -59,28 +50,7 @@ wss.on("connection", (ws) => {
   });
 });
 
-// app.get("/fetch_preview", async (req, res) => {
-//   let url = req.headers.url;
-//   console.log("url", url);
 
-//   let result;
-//   urlMetadata(url, {})
-//     .then(async (metadata) => {
-//       // console.log("urlMetadata_metadata", metadata);
-//       res.send(metadata);
-//     })
-//     .catch((error) => {
-//       console.log("urlMetadata_error", error);
-//       res.status(503).end();
-//     });
-// });
-
-// app.get("/", async (req, res) => {
-//   console.log('res', res)
-//   console.log('req', req)
-//   res.send("connecting")
-
-// });
 // const nodeServer = http.createServer(app);
 
 // nodeServer.listen(3400, () => {
